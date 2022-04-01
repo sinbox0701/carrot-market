@@ -2,7 +2,7 @@
 - [x] Auth
 - [x] Home
 - [x] Item
-- [ ] Community
+- [x] Community
 - [ ] Write
 - [ ] Chat
 - [ ] Profile
