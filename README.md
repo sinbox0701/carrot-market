@@ -3,7 +3,7 @@
 - [x] Home
 - [x] Item
 - [x] Community
-- [ ] Write
+- [x] Write
 - [ ] Chat
 - [ ] Profile
 - [ ] Bought
