@@ -4,7 +4,7 @@
 - [x] Item
 - [x] Community
 - [x] Write
-- [ ] Chat
+- [x] Chat
 - [ ] Profile
 - [ ] Bought
 - [ ] Loved
