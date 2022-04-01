@@ -1,7 +1,7 @@
 ## UI
 - [x] Auth
 - [x] Home
-- [ ] Item
+- [x] Item
 - [ ] Community
 - [ ] Write
 - [ ] Chat

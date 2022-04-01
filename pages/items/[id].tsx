@@ -27,7 +27,6 @@ const ItemDetail: NextPage = () => {
                     </p>
                     <div className="flex items-center justify-between space-x-2">
                         <button className="font-medium flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Talk to seller</button>
-                        {/* flex-1은 형제 component보다 강하게 flex성질을 주어 shrink되더라도 덜 줄어든다 */}
                         <button className="p-3 flex items-center justify-center text-gray-400 rounded-md hover:bg-gray-100 hover:text-gray-500">
                             <svg
                                 className="h-6 w-6 "
