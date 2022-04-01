@@ -1,6 +1,6 @@
 ## UI
-- [ ] Auth
-- [ ] Home
+- [x] Auth
+- [x] Home
 - [ ] Item
 - [ ] Community
 - [ ] Write
