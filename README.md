@@ -6,8 +6,8 @@
 - [x] Write
 - [x] Chat
 - [ ] Profile
-- [ ] Bought
-- [ ] Loved
-- [ ] Sold
+- [x] Bought
+- [x] Loved
+- [x] Sold
 - [ ] Stream
 - [ ] Layout
