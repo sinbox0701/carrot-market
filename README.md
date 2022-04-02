@@ -5,7 +5,7 @@
 - [x] Community
 - [x] Write
 - [x] Chat
-- [ ] Profile
+- [x] Profile
 - [x] Bought
 - [x] Loved
 - [x] Sold
