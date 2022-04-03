@@ -9,5 +9,5 @@
 - [x] Bought
 - [x] Loved
 - [x] Sold
-- [ ] Stream
+- [x] Stream
 - [ ] Layout
