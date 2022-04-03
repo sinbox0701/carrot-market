@@ -10,4 +10,4 @@
 - [x] Loved
 - [x] Sold
 - [x] Stream
-- [ ] Layout
+- [x] Layout
