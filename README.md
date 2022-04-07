@@ -11,3 +11,8 @@
 - [x] Sold
 - [x] Stream
 - [x] Layout
+
+## DB SET UP
+- [x] Prisma
+- [x] PlanetScale
+- [x] API Routes
