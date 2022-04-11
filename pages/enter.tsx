@@ -12,9 +12,8 @@ interface EnterForm {
 }
 
 const Enter: NextPage = () => {
-    const [enter, {loading,data, error}] = useMutation("/api/users/enter");
+    const [enter, { loading, data, error }] = useMutation("/api/users/enter");
     //return function, object
-    const [submitting, setSubmitting] = useState(false); //fetch를 기다리는 기간 체크
     const { register, handleSubmit, reset } = useForm<EnterForm>();
     const [method, setMethod] = useState<"email"|"phone">("email");//method의 값은 "email" or "phone" default --> "email"
     const onEmailClick = () => {
@@ -25,8 +24,9 @@ const Enter: NextPage = () => {
         reset();
         setMethod("phone")
     };
-    const onValid = (data: EnterForm) => {
-        enter(data);
+    const onValid = (validForm: EnterForm) => {
+        if(loading) return;
+        enter(validForm);
     };
 
     return (
@@ -62,9 +62,9 @@ const Enter: NextPage = () => {
                             required
                         />
                     ) : null}
-                    {method === "email" ? <Button text={"Get login link"} /> : null}
+                    {method === "email" ? <Button text={loading ? "kLoading" : "Get login link"} /> : null}
                     {method === "phone" ? (
-                        <Button text={submitting ? "Loading" : "Get one-time password"} />
+                        <Button text={loading ? "Loading" : "Get one-time password"} />
                     ) : null}
                 </form>
                 <div className="mt-8">
