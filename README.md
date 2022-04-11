@@ -16,3 +16,11 @@
 - [x] Prisma
 - [x] PlanetScale
 - [x] API Routes
+
+## API
+- [ ] AUTHENTICATION
+- [ ] AUTHORIZATION
+- [ ] PRODUCTS
+- [ ] 동네생활
+- [ ] PROFILE
+- [ ] STREAMS
