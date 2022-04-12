@@ -1,5 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+export interface ResponseType {
+    ok: boolean;
+    [key:string]: any;
+};
+//Return할 데이터 타입
+
 export default function withHandler(
     method:"GET"|"POST"|"DELETE", 
     fn: (req:NextApiRequest, res:NextApiResponse) => void
@@ -18,8 +24,3 @@ export default function withHandler(
         }
     }
 }
-
-//handler function 작성
-//withHandler에서 handler function을 받아옴
-//withHandler는 껍데기에 불과함
-//api route를 통해 접근하지 못하세 막아놓는것
