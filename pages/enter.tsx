@@ -1,10 +1,11 @@
 import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "@components/button";
 import Input from "@components/input";
 import useMutation from "@libs/client/useMutation";
 import { buttonCLS } from "@libs/client/utils";
+import { useRouter } from "next/router";
 
 interface EnterForm {
     email?: string;
@@ -46,6 +47,13 @@ const Enter: NextPage = () => {
         confirmToken(validForm);
     };
     //handleSubmit에 들어가는 onValid도 다름
+
+    const router = useRouter();
+    useEffect(()=>{
+        if(tokenData?.ok){
+            router.push("/");
+        }
+    },[tokenData, router]);
 
     return (
         <div className="mt-16 px-4">
