@@ -28,29 +28,30 @@ async function handler(req:NextApiRequest, res:NextApiResponse<ResponseType>){
             },
         },
     });
+    console.log(token);
     if(phone){
-        await twilioClient.messages.create({
-            messagingServiceSid: process.env.TWILIO_MSID,
-            to: process.env.MY_PHONE!, //MY_PHONE이라는 변수가 없을수도있어 뒤에 !를 붙인다   //to: phone
-            body: `Your Login Token is ${payload}.` 
-        });
+        // await twilioClient.messages.create({
+        //     messagingServiceSid: process.env.TWILIO_MSID,
+        //     to: process.env.MY_PHONE!, //MY_PHONE이라는 변수가 없을수도있어 뒤에 !를 붙인다   //to: phone
+        //     body: `Your Login Token is ${payload}.` 
+        // });
     }
     if(email){
-        const transporter = nodemailer.createTransport({
-            service:"gmail",
-            host:"smtp.gmail.com",
-            port:587,
-            auth:{
-                user:process.env.GMAIL,
-                pass:process.env.PASSWORD
-            }
-        });
-        await transporter.sendMail({
-            from:process.env.GMAIL,
-            to:email,
-            subject:"Carrot Market Confirm Auth",
-            html:`Your token is ${payload}.`
-        });
+        // const transporter = nodemailer.createTransport({
+        //     service:"gmail",
+        //     host:"smtp.gmail.com",
+        //     port:587,
+        //     auth:{
+        //         user:process.env.GMAIL,
+        //         pass:process.env.PASSWORD
+        //     }
+        // });
+        // await transporter.sendMail({
+        //     from:process.env.GMAIL,
+        //     to:email,
+        //     subject:"Carrot Market Confirm Auth",
+        //     html:`Your token is ${payload}.`
+        // });
     }
 
     return res.json({

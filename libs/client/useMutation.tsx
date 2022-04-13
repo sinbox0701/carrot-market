@@ -1,15 +1,17 @@
 import { useState } from "react";
 
-interface UseMutationState {
+interface UseMutationState<T> {
     loading: boolean;
-    data?: object;
+    data?: T;
     error?: object;
 };
+// <T> 선언
+// 객체 생성시 해당 타입으로 변경
 
-type UseMutationResult = [(data:any) => void, UseMutationState];
+type UseMutationResult<T> = [(data:any) => void, UseMutationState<T>];
 
-export default function useMutation(url:string): UseMutationResult {
-    const [state, setState] = useState<UseMutationState>({
+export default function useMutation<T = any>(url:string): UseMutationResult<T> {
+    const [state, setState] = useState<UseMutationState<T>>({
         loading: false,
         data: undefined,
         error: undefined
