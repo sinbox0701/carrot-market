@@ -10,7 +10,7 @@ export default function withHandler(
     method:"GET"|"POST"|"DELETE", 
     fn: (req:NextApiRequest, res:NextApiResponse) => void
 ){
-    return async function(req:NextApiRequest, res:NextApiResponse){
+    return async function(req:NextApiRequest, res:NextApiResponse):Promise<any>{
         if(req.method !== method){
             return res.status(405).end();
             //Method Not Allowed: 허용되지 않은 메서드 사용
