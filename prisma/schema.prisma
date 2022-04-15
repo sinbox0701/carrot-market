@@ -19,6 +19,7 @@ model User {
   name String
   avatar String?
   tokens Token[]
+  products Product[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -31,3 +32,17 @@ model Token {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Product {
+  id String @id @default(uuid())
+  image String
+  name String
+  price Int
+  description String @db.MediumText
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+// 길이 제한이 없는 필드는 생성 불가
+// 기본 varchar보다 긴 Text를 원하면 @db.MediumText 사용
