@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Layout from "@components/layout";
 import Button from "@components/button";
 import { useRouter } from "next/router";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import Link from "next/link";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -23,9 +23,15 @@ interface ItemDetailResponse {
 
 const ItemDetail: NextPage = () => {
     const router = useRouter();
-    const { data } = useSWR<ItemDetailResponse>(router.query.id ? `/api/products/${router.query.id}` : null);
+    const { mutate } = useSWRConfig();
+    const { data, mutate:boundMutate } = useSWR<ItemDetailResponse>(router.query.id ? `/api/products/${router.query.id}` : null);
     const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
     const onFavoriteClick = () => {
+        if(!data) return;
+        boundMutate({...data, isLiked:!data.isLiked},false);
+        //첫번째 인자에 있는 data로 덮어씀 / true면 덮어쓰고 바로 재검증 , false면 추가 동작이 있기전까지 덮어쓴 상태 유지
+        //mutate("/api/users/me", (prev: any) => ({ ok: !prev.ok }), false);
+        //mutate("/api/users/me") --> refetch
         toggleFav({});
     };
     return (
@@ -58,7 +64,7 @@ const ItemDetail: NextPage = () => {
                                 {data?.isLiked ? 
                                     < svg 
                                         xmlns="http://www.w3.org/2000/svg" 
-                                        className="h-5 w-5" 
+                                        className="h-6 w-6" 
                                         viewBox="0 0 20 20" 
                                         fill="currentColor"
                                         >
