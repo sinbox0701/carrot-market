@@ -8,7 +8,6 @@ async function handler(
     res:NextApiResponse<ResponseType>
 ){
     const { id } = req.query;
-    //string이거나 string 배열일수가 있어 toString해줌
     const product = await client.product.findUnique({
         where:{
             id: id.toString(),
@@ -23,7 +22,26 @@ async function handler(
             }
         }
     });
-    res.json({ok:true, product});
+    const terms = product?.name.split(" ").map((word)=>({
+        name:{
+            contains:word
+        }
+    }));
+    const relatedProducts = await client.product.findMany({
+        where:{
+            OR: terms,
+            AND:{
+                id:{
+                    not:product?.id
+                }
+            }
+        },
+        orderBy:{
+            createdAt:"desc"
+        },
+        take:10
+    });
+    res.json({ok:true, product, relatedProducts});
 };
 
 export default withApiSession(withHandler({methods:["GET"],handler}));

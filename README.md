@@ -18,8 +18,8 @@
 - [x] API Routes
 
 ## API
-- [ ] AUTHENTICATION
-- [ ] AUTHORIZATION
+- [x] AUTHENTICATION
+- [x] AUTHORIZATION
 - [ ] PRODUCTS
 - [ ] 동네생활
 - [ ] PROFILE
