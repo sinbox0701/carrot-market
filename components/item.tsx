@@ -2,7 +2,7 @@ import Link from "next/link";
 
 interface ItemProps {
     title: string;
-    id: number;
+    id: string;
     price: number;
     comments: number;
     hearts: number;
