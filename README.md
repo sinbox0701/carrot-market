@@ -20,7 +20,7 @@
 ## API
 - [x] AUTHENTICATION
 - [x] AUTHORIZATION
-- [ ] PRODUCTS
+- [x] PRODUCTS
 - [ ] 동네생활
 - [ ] PROFILE
 - [ ] STREAMS
