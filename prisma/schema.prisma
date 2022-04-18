@@ -64,6 +64,8 @@ model Post {
   userId    String
   answers Answer[]
   wondering Wondering[]
+  latitude Float?
+  longitude Float?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
