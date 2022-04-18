@@ -4,6 +4,7 @@ import Layout from "@components/layout";
 import FloatingButton from "@components/floating-button";
 import useSWR from "swr";
 import { Post, User } from "@prisma/client";
+import useCoords from "@libs/client/useCoords";
 
 interface PostWithUser extends Post {
     user: User;
@@ -19,7 +20,8 @@ interface PostResponse {
 }
 
 const Community: NextPage = () => {
-    const { data } = useSWR<PostResponse>(`/api/posts`);
+    const { latitude, longitude } = useCoords();
+    const { data } = useSWR<PostResponse>(latitude && longitude ? `/api/posts?latitude=${latitude}&longitude=${longitude}` : null);
     const dateFormat = (data: Date) => {
         const dateStr = data.toString();
         const dataArr = dateStr.split("T")
