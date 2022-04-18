@@ -21,6 +21,6 @@
 - [x] AUTHENTICATION
 - [x] AUTHORIZATION
 - [x] PRODUCTS
-- [ ] 동네생활
+- [x] 동네생활
 - [ ] PROFILE
 - [ ] STREAMS

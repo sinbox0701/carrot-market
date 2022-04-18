@@ -36,7 +36,6 @@ async function handler(
         const parsedLatitude = parseFloat(latitude.toString());
         const parsedLongitue = parseFloat(longitude.toString());
         //str --> float
-        console.log(latitude, parsedLatitude - 0.01);
         const posts = await client.post.findMany({
             include:{
                 user:{
