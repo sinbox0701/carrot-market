@@ -47,9 +47,19 @@ async function handler(
     if(!post){
         res.status(404).json({ok:false, error:"Not found Post"});
     }
+    const isWondering = Boolean(await client.wondering.findFirst({
+        where:{
+            postId:post?.id
+        },
+        select:{
+            id:true
+        }
+    }));
+
     res.json({
         ok:true,
-        post
+        post,
+        isWondering
     });
 };
 
