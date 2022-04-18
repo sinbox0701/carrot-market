@@ -29,11 +29,22 @@ interface CommunityPostResponse {
     isWondering:boolean;
 }
 
+interface AnswerForm {
+    answer:string;
+}
+
+interface AnswerMutation {
+    ok:boolean;
+    answer:Answer;
+}
+
 const CommunityPostDetail: NextPage = () => {
     const router = useRouter();
-    const { register } = useForm();
+    const { register, handleSubmit, reset } = useForm<AnswerForm>();
     const { data, mutate } = useSWR<CommunityPostResponse>(router.query.id ? `/api/posts/${router.query.id}` : null);
-    const [wonder] = useMutation(`/api/posts/${router.query.id}/wonder`);
+    const [wonder, {loading}] = useMutation(`/api/posts/${router.query.id}/wonder`);
+    const [ sendAnswer, {data:answerData, loading:answerLoading} ] = useMutation<AnswerMutation>(`/api/posts/${router.query.id}/answers`);
+    
     const onWonderClick = () => {
         if(!data) return;
         mutate({
@@ -48,8 +59,21 @@ const CommunityPostDetail: NextPage = () => {
             isWondering: !data.isWondering
         }, false);
         //data의 post의 _count의 wondering & data의 isWondering mutate하고 싶을때 작성
-        wonder({});
+        if(!loading){
+            wonder({});
+        }
     };
+    const onValid = (data:AnswerForm) => {
+        if(answerLoading) return;
+        sendAnswer(data);
+    };
+
+    useEffect(()=>{
+        if(answerData && answerData.ok){
+            reset();
+            mutate(); //data fetch용도로 사용 --> answer를 만들면 실시간처럼 보임
+        }
+    },[answerData, reset, mutate]);
     useEffect(()=>{
         if (data && !data.ok) {
             router.push("/community");
@@ -136,17 +160,17 @@ const CommunityPostDetail: NextPage = () => {
                         </div>
                     ))}
                 </div>
-                <div className="px-4">
+                <form className="px-4" onSubmit={handleSubmit(onValid)}>
                     <TextArea 
                         required 
                         name="answer" 
                         label="Answer this question"
-                        register={register("answer")}
+                        register={register("answer", {required: true, minLength:5})}
                     />
                     <button className="mt-2 w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:outline-none">
-                        Reply
+                        {answerLoading ? "Loading..." : "Reply"}
                     </button>
-                </div>
+                </form>
             </div>
         </Layout>
     );
