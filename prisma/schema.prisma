@@ -25,7 +25,6 @@ model User {
   receivedReviews Review[]    @relation(name: "receivedReviews")
   sales           Sale[]
   purchases       Purchase[]
-  record          Record[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -50,7 +49,6 @@ model Product {
   favs Fav[]
   sales       Sale[]
   purchases   Purchase[]
-  records     Record[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -106,6 +104,7 @@ model Review {
   createdById String
   creeatedFor User @relation(name:"receivedReviews", fields: [createdForId], references: [id], onDelete: Cascade)
   createdForId String
+  score Int @default(1)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -128,21 +127,4 @@ model Purchase {
   productId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model Record {
-  id String @id @default(uuid())
-  kind  Kind
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-enum Kind {
-  Purchase
-  Sale
-  Fav
 }
