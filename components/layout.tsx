@@ -80,8 +80,8 @@ export default function Layout({title, canGoBack, hasTabBar, children}:LayoutPro
                         <span>채팅</span>
                     </a>
                 </Link>
-                <Link href="/live">
-                    <a className={buttonCLS("flex flex-col items-center space-y-2", router.pathname === "/live" ? "text-orange-500" : "hover:text-gray-500 transition-colors" )}>
+                <Link href="/streams">
+                    <a className={buttonCLS("flex flex-col items-center space-y-2", router.pathname === "/streams" ? "text-orange-500" : "hover:text-gray-500 transition-colors" )}>
                         <svg
                             className="w-6 h-6"
                             fill="none"

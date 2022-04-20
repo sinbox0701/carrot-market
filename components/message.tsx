@@ -11,7 +11,7 @@ export default function Message({ message, avatarUrl, reversed }: MessageProps) 
         <div
             className={buttonCLS(
                 "flex  items-start",
-                reversed ? "flex-row-reverse space-x-reverse" : "space-x-2"
+                reversed ? "flex-row-reverse space-x-reverse space-x-2" : "space-x-2"
             )}
         >
             <div className="w-8 h-8 rounded-full bg-slate-400" />
