@@ -4,7 +4,7 @@ import { SWRConfig } from "swr";
 import useUser from '@libs/client/useUser';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // const { user } = useUser(); 
+  const { user } = useUser(); 
   return (
     <SWRConfig
       value={{

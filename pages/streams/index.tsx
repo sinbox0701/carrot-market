@@ -16,7 +16,7 @@ const Live: NextPage = () => {
     return (
         <Layout title="라이브" hasTabBar>
             <div className="py-10 divide-y-[1px] space-y-4">
-                {data?.streams.map((stream) => (
+                {data?.streams?.map((stream) => (
                     <Link key={stream.id} href={`/streams/${stream?.id}`}>
                         <a className="pt-4 block  px-4">
                         <div className="w-full rounded-md shadow-sm bg-slate-300 aspect-video" />
