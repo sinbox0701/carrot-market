@@ -41,18 +41,31 @@ const Stream: NextPage = () => {
     const router = useRouter();
     const { register, handleSubmit, reset } = useForm<MessageForm>();
     const [sendMessage, {data:sendMessageData, loading}] = useMutation<MessageMutation>(`/api/streams/${router.query.id}/message`);
-    const { data, mutate } = useSWR<StreamResponse>(router.query.id ? `/api/streams/${router.query.id}` : null);
+    const { data, mutate } = useSWR<StreamResponse>(router.query.id ? `/api/streams/${router.query.id}` : null,{
+        refreshInterval:1000
+    });
     const onValid = (data:MessageForm) => {
         if(loading) return;
         reset();
+        mutate(prev => prev && ({
+            ...prev,
+            stream:{
+                ...prev.stream,
+                messages:[
+                    ...prev.stream.messages,
+                    {
+                        id:Date.now(),
+                        message:data.message,
+                        user:{
+                            ...user
+                        }
+
+                    }
+                ]
+            }
+        } as any), false );
         sendMessage(data);
     };
-
-    useEffect(()=>{
-        if (sendMessageData && sendMessageData.ok) {
-            mutate();
-        }
-    },[sendMessageData,mutate]);
 
     return (
         <Layout canGoBack>
