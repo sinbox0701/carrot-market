@@ -3,26 +3,41 @@ import Link from "next/link";
 import Layout from "@components/layout";
 import FloatingButton from "@components/floating-button";
 import { Stream } from "@prisma/client";
-import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
+import { useEffect } from "react";
+import { useInfiniteScroll } from "@libs/client/useInfiniteScroll";
 
 interface StreamsResponse {
     ok:boolean;
     streams: Stream[];
+    pages:number;
 }
 
+const getKey = (pageIndex: number, previousPageData: StreamsResponse) => {
+    if (pageIndex === 0) return `/api/streams?page=1`;
+    if (pageIndex + 1 > previousPageData.pages) return null;
+    return `/api/streams?page=${pageIndex + 1}`;
+};
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const Live: NextPage = () => {
-    const { data } = useSWR<StreamsResponse>(`/api/streams`);
+    const { data, setSize } = useSWRInfinite<StreamsResponse>(getKey, fetcher);
+    const streams = data ? data.map((item) => item.streams).flat() : [];
+    const page = useInfiniteScroll();
+    useEffect(() => {
+        setSize(page);
+    }, [setSize, page]);
 
     return (
         <Layout title="라이브" hasTabBar>
             <div className="py-10 divide-y-[1px] space-y-4">
-                {data?.streams?.map((stream) => (
+                {streams?.map((stream) => (
                     <Link key={stream.id} href={`/streams/${stream?.id}`}>
                         <a className="pt-4 block  px-4">
-                        <div className="w-full rounded-md shadow-sm bg-slate-300 aspect-video" />
-                        <h1 className="text-2xl mt-2 font-bold text-gray-900">
-                            {stream?.name}
-                        </h1>
+                            <div className="w-full rounded-md shadow-sm bg-slate-300 aspect-video" />
+                            <h1 className="text-2xl mt-2 font-bold text-gray-900">
+                                {stream?.name}
+                            </h1>
                         </a>
                   </Link>
                 ))}

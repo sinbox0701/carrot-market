@@ -9,7 +9,8 @@ async function handler(
 ){
     const {
         body: {name, price, description},
-        session: {user}
+        session: {user},
+        query:{page}
     } = req;
     if(req.method === "POST"){
         const stream = await client.stream.create({
@@ -30,8 +31,12 @@ async function handler(
         });
     }
     if(req.method === "GET") {
-        const streams = await client.stream.findMany();
-        res.json({ ok: true, streams });
+        const streamCount = await client.stream.count();
+        const streams = await client.stream.findMany({
+            take:10, //몇개 가져올건지
+            skip:(+page - 1 ) * 10 // 몇개 스킵할건지(앞에 열개) 10, 20 이런식 
+        });
+        res.json({ ok: true, streams, pages: Math.ceil(streamCount / 10) });
     }
 };
 
