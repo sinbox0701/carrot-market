@@ -23,7 +23,6 @@ interface EditProfileResponse {
 const Edit: NextPage = () => {
     const { user } = useUser();
     const { register, handleSubmit, setValue, setError, watch, formState:{errors}} = useForm<EditProfileForm>();
-    //watch --> 미리보기
     useEffect(()=>{
         if(user?.name){
             setValue("name",user.name);
@@ -44,12 +43,18 @@ const Edit: NextPage = () => {
                 message:"두개중에 하나는 적어야지 양싱없는 인간아!"
             })
         }
-        if(avatar && avatar.length > 0){
+        if(avatar && avatar.length > 0 && user){
             // ask for CF URL
-            const cloudflareRequest = await (await fetch(`/api/files`)).json();
-            console.log(cloudflareRequest);
-            return ;
+            const {id, uploadURL} = await (await fetch(`/api/files`)).json();
+
             // upload file to CF URL
+            const form = new FormData();
+            form.append("file", avatar[0], user?.id+"");
+            await fetch(uploadURL,{
+                method:"POST",
+                body:form
+            });
+            return;
             // editProfile Mutation call
             editProfile({
                 email,
