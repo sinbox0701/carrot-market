@@ -33,6 +33,9 @@ const Edit: NextPage = () => {
         if(user?.phone){
             setValue("phone",user.phone);
         }
+        if(user?.avatar){
+            setAvatarPreview(`https://imagedelivery.net/PKS1sEm5sdAMOXOi2yIXuA/${user?.avatar}/avatar`)
+        }
     },[user,setValue]);
 
     const [editProfile, {data,loading}] = useMutation<EditProfileResponse>(`/api/users/me`);
@@ -45,23 +48,26 @@ const Edit: NextPage = () => {
         }
         if(avatar && avatar.length > 0 && user){
             // ask for CF URL
-            const {id, uploadURL} = await (await fetch(`/api/files`)).json();
+            const { uploadURL} = await (await fetch(`/api/files`)).json();
 
             // upload file to CF URL
             const form = new FormData();
             form.append("file", avatar[0], user?.id+"");
-            await fetch(uploadURL,{
-                method:"POST",
-                body:form
-            });
-            return;
+            const {
+                result: {id}
+            } = await (await fetch(uploadURL, {
+                    method: "POST",
+                    body: form
+                })
+            ).json();
+
             // editProfile Mutation call
             editProfile({
                 email,
                 phone,
                 name,
-                //avatarURL: CF URL
-            })
+                avatarId: id
+            });
         }
         else{
             editProfile({

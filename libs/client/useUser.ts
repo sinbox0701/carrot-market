@@ -13,12 +13,12 @@ export default function useUser(){
     const router = useRouter();
     useEffect(()=>{
         console.log(data);
-        if(data === undefined && router.pathname !== "/enter" ){
-            router.replace("/enter");
-        }
         if(data && !data.ok){
             router.replace("/enter");
         }
+        // if(data === undefined && router.pathname !== "/enter" ){
+        //     router.replace("/enter");
+        // }
         
     },[data,router]);
     
