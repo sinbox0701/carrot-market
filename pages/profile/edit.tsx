@@ -38,17 +38,33 @@ const Edit: NextPage = () => {
 
     const [editProfile, {data,loading}] = useMutation<EditProfileResponse>(`/api/users/me`);
 
-    const onValid = ({email, phone, name, avatar}:EditProfileForm) => {
+    const onValid = async ({email, phone, name, avatar}:EditProfileForm) => {
         if(email === "" && phone === "" && name === ""){
             setError("formErrors",{
                 message:"두개중에 하나는 적어야지 양싱없는 인간아!"
             })
         }
-        editProfile({
-            email,
-            phone,
-            name
-        });
+        if(avatar && avatar.length > 0){
+            // ask for CF URL
+            const cloudflareRequest = await (await fetch(`/api/files`)).json();
+            console.log(cloudflareRequest);
+            return ;
+            // upload file to CF URL
+            // editProfile Mutation call
+            editProfile({
+                email,
+                phone,
+                name,
+                //avatarURL: CF URL
+            })
+        }
+        else{
+            editProfile({
+                email,
+                phone,
+                name
+            });
+        }
     };
     useEffect(() => {
         if (data && !data.ok && data.error) {
