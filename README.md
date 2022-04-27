@@ -24,6 +24,7 @@
 - [x] 동네생활
 - [x] PROFILE
 - [x] STREAMS
+- [ ] LIVE STREAMING
 
 ## CloudFlare
 
