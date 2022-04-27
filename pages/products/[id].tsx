@@ -9,6 +9,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { Product, User } from "@prisma/client";
 import useMutation from "@libs/client/useMutation";
 import { buttonCLS } from "@libs/client/utils";
+import Image from "next/image";
 
 interface ProductWithUser extends Product {
     user: User;
@@ -43,8 +44,11 @@ const ItemDetail: NextPage = () => {
                         src={`https://imagedelivery.net/PKS1sEm5sdAMOXOi2yIXuA/${data?.product?.image}/public`}
                     />
                     <div className="flex cursor-pointer py-3 boreder-t border-b items-center space-x-3">
-                        <img
+                        <Image
                             src={`https://imagedelivery.net/PKS1sEm5sdAMOXOi2yIXuA/${data?.product?.user?.avatar}/avatar`}
+                            alt="avatar"
+                            width={48}
+                            height={48}
                             className="h-12 w-12 rounded-full bg-slate-300" 
                         />
                         <div>

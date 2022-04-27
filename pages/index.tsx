@@ -6,8 +6,6 @@ import useUser from '@libs/client/useUser';
 import Head from "next/head";
 import useSWR from 'swr';
 import { Product } from '@prisma/client';
-import Image from 'next/image';
-import boo from "../public/boo.png";
 
 export interface ProductWithCount extends Product {
   _count:{
@@ -56,7 +54,6 @@ const Home: NextPage = () => {
           </svg>
         </FloatingButton>
       </div>
-      <Image src={boo} alt="boo" width={500} height={500} placeholder="blur" quality={5} />
     </Layout>
   ); 
 }
