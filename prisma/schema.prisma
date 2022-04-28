@@ -139,6 +139,9 @@ model Stream {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   messages Message[]
+  cloudflareId String
+  cloudflareUrl String
+  cloudflareKey String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
