@@ -4,7 +4,7 @@ import FloatingButton from "@components/floating-button";
 import Item from "@components/item";
 import useUser from '@libs/client/useUser';
 import Head from "next/head";
-import useSWR from 'swr';
+import useSWR, { SWRConfig } from 'swr';
 import { Product } from '@prisma/client';
 import client from "@libs/server/client";
 
@@ -19,22 +19,22 @@ interface ProductResponse {
   products: ProductWithCount[];
 }
 
-const Home: NextPage<{ products: ProductWithCount[] }> = ({ products }) => {
+const Home: NextPage = () => {
   const { user, isLoading } = useUser();
-  //const { data } = useSWR<ProductResponse>("/api/products");
+  const { data } = useSWR<ProductResponse>("/api/products");
   return (
     <Layout title='홈' hasTabBar>
       <Head>
         <title>HOME</title>
       </Head>
       <div className='flex flex-col space-y-5 py-10'>
-        {products?.map((product) => (
+        {data?.products?.map((product) => (
           <Item
             id={product.id}
             key={product.id}
             title={product.name}
             price={product.price}
-            hearts={product._count?.favs}
+            hearts={product._count.favs || 0}
           />
         ))}
         <FloatingButton href='/products/upload'>
@@ -59,6 +59,23 @@ const Home: NextPage<{ products: ProductWithCount[] }> = ({ products }) => {
   ); 
 }
 
+const Page: NextPage<{ products: ProductWithCount[] }> = ({ products }) => {
+  return (
+    <SWRConfig
+      value={{
+        fallback: {
+          "/api/products": {// api 에서 return하는 객체와 동잏
+            ok: true,
+            products,
+          },
+        },
+      }}
+    >
+      <Home />
+    </SWRConfig>
+  );
+};
+
 export async function getServerSideProps() {
   const products = await client.product.findMany({});
   return {
@@ -68,4 +85,4 @@ export async function getServerSideProps() {
   };
 }
 
-export default Home
+export default Page;
