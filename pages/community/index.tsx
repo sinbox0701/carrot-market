@@ -109,8 +109,7 @@ export async function getStaticProps(){
     return {
         props:{
             posts: JSON.parse(JSON.stringify(posts))
-        },
-        revalidate: 10 // request가 왔을 때 최대 10초에 한번씩 Next.js는 페이지 re-generate(재생성)을 시도(10초로 지정함)
+        }
     }
 }
 
